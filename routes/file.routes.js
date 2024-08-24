@@ -82,4 +82,28 @@ router.use((err, req, res, next) => {
     next();
 });
 
+
+router.get('/:id', async (req, res) => {
+    try {
+        const fileId = req.params.id;
+        const file = await File.findById(fileId).populate('userId');
+
+        if (!file) {
+            return res.status(404).json({ message: 'File not found' });
+        }
+
+        res.status(200).json({
+            filename: file.filename,
+            size: file.size,
+            format: file.format,
+            pages: file.pages,
+            path: file.path,
+            user: file.userId
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ message: 'Server Error: ' + error.message });
+    }
+});
+
 module.exports = router;
