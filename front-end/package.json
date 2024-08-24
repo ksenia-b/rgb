@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "nuxt": "^3.13.0",
-    "nuxt3": "^3.8.0-28284309.b3d3d7f4",
-    "vue": "latest",
-    "vuetify": "^3.7.0-beta.1"
+    "vue": "latest"
   }
 }
