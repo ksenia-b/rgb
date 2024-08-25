@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@mdi/font": "^7.4.47"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}
