@@ -1,19 +1,19 @@
-<!-- pages/files/[id].vue -->
 <template>
     <div>
-        <pre>{{ file }}</pre>
         <h2>File Details</h2>
         <v-card class="mx-auto" max-width="600">
-            <v-list-item>
-                <!-- <v-list-item-content>
+            <v-list-item v-if="file">
+                <v-list-item-content>
                     <v-list-item-title>{{ file.filename }}</v-list-item-title>
                     <v-list-item-subtitle>
                         Size: {{ file.size }}<br>
                         Format: {{ file.format }}<br>
-                        Author: {{ file.author }}<br>
-                        <!-- Add any other details you need -->
-                <!-- </v-list-item-subtitle>
-                </v-list-item-content> --> -->
+                        Author: {{ file.user?.name || 'Unknown' }}<br>
+                    </v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-else>
+                <v-list-item-content>Loading file details...</v-list-item-content>
             </v-list-item>
         </v-card>
     </div>
@@ -28,9 +28,21 @@ const file = ref(null);
 
 onMounted(async () => {
     try {
-        const response = await fetch(`http://localhost:3002/files/${route.params.id}`);
+        const fileId = route.params.id;
+        const response = await fetch(`http://localhost:3002/files/${fileId}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+        }
+
         const data = await response.json();
-        file.value = data;
+        console.log('Fetched file data:', data); // Log fetched data
+
+        if (data && data.filename) {
+            file.value = data;
+        } else {
+            console.warn('Invalid file data received:', data);
+        }
     } catch (error) {
         console.error('Error fetching file details:', error);
     }
