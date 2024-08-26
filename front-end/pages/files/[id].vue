@@ -22,27 +22,23 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useRuntimeConfig } from '#app';
 
 const route = useRoute();
+const config = useRuntimeConfig();
 const file = ref(null);
 
 onMounted(async () => {
     try {
         const fileId = route.params.id;
-        const response = await fetch(`http://localhost:3002/files/${fileId}`);
+        const response = await fetch(`${config.public.apiUrl}/files/${fileId}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
-        console.log('Fetched file data:', data); // Log fetched data
-
-        if (data && data.filename) {
-            file.value = data;
-        } else {
-            console.warn('Invalid file data received:', data);
-        }
+        file.value = data;
     } catch (error) {
         console.error('Error fetching file details:', error);
     }

@@ -7,7 +7,6 @@
 
 <script>
 export default {
-    // Add your component's JavaScript logic here if needed
 }
 </script>
 
