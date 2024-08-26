@@ -100,7 +100,7 @@ const uploadFile = async () => {
 const fetchFiles = async (reset = false) => {
     if (reset) {
         files.value = [];
-        hasMoreFiles.value = true;  // Ensure the "Load More" button is enabled when fetching files
+        hasMoreFiles.value = true;
         page.value = 1;
     }
 

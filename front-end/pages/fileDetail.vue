@@ -8,10 +8,9 @@
                 <strong>Author:</strong> {{ user.name }}<br>
                 <strong>Size:</strong> {{ file.size }}<br>
                 <strong>Format:</strong> {{ file.format }}<br>
-                <!-- Additional details here -->
             </v-card-subtitle>
             <v-card-text>
-                <!-- Add more details or content as needed -->
+        
             </v-card-text>
         </v-card>
     </div>
@@ -41,7 +40,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-/* Add your styles here */
-</style>
