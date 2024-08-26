@@ -5,11 +5,11 @@
         <v-card class="mx-auto" max-width="600">
             <v-file-input v-model="selectedFile" label="Select a PDF file" accept=".pdf" @change="handleFileChange" />
 
-            <v-btn @click="uploadFile" :disabled="!selectedFile">
-                Upload File
+            <v-btn @click="uploadFile" :disabled="!selectedFile" class="upload-btn">
+                Upload File 
             </v-btn>
-            <p v-if="successMessage" style="color: green;">{{ successMessage }}</p>
-            <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
+            <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
             <v-list>
                 <v-list-item-group v-if="files.length">
@@ -31,7 +31,7 @@
             </v-list>
         </v-card>
 
-        <v-btn @click="loadMoreFiles" class="mt-4" :disabled="!hasMoreFiles">
+        <v-btn @click="loadMoreFiles" class="load-more-btn" :disabled="!hasMoreFiles">
             Load More Files
         </v-btn>
     </div>
@@ -85,13 +85,11 @@ const uploadFile = async () => {
         successMessage.value = 'Файл успішно завантажено!';
         errorMessage.value = '';
 
-        // Add the new file to the end of the list
         files.value.push(data.file);
         selectedFile.value = null;
 
-        // Reset pagination to start from the first page after adding a new file
         page.value = 1;
-        await fetchFiles(true);  // Fetch the first page again to update file list
+        await fetchFiles(true); 
 
     } catch (error) {
         errorMessage.value = `Error uploading file: ${error.message}`;
@@ -121,9 +119,9 @@ const fetchFiles = async (reset = false) => {
         const data = await response.json();
         if (data && Array.isArray(data.files)) {
             files.value = [...files.value, ...data.files];
-            hasMoreFiles.value = data.files.length >= 3;  // Update based on fetched files
+            hasMoreFiles.value = data.files.length >= 3;  
         } else {
-            hasMoreFiles.value = false;  // No more files to load
+            hasMoreFiles.value = false; 
         }
     } catch (error) {
         errorMessage.value = `Error fetching files: ${error.message}`;
@@ -146,14 +144,35 @@ onMounted(() => {
 h2 {
     margin-bottom: 20px;
     font-size: 36px;
+    text-align: center;
 }
 
 p {
+    text-align: center;
     margin: 20px 0;
 }
 
 a {
     text-decoration: none;
     color: blue;
+}
+.upload-btn {
+    display: block;
+    margin: 10px auto;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.load-more-btn {
+    display: block;
+    margin: 20px auto;
 }
 </style>
