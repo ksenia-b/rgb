@@ -148,7 +148,7 @@ h2 {
 }
 
 p {
-    text-align: center;
+    gittext-align: center;
     margin: 20px 0;
 }
 
